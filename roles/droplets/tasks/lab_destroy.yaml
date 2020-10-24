@@ -1,0 +1,16 @@
+# lab_destroy.yaml
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  strategy: free
+  environment: "{{digital_ocean_env}}"
+  vars_prompt:
+    - name: playbook_name
+      prompt: "Destroy Droplets from which playbook?"
+      private: no  
+
+  tasks:
+    - name: Destroy multiple DO Droplets
+      include_tasks: destroy_droplet.yaml
+      with_items: "{{ lookup('file', './{{ playbook_name }}_droplet_id').splitlines() }}"

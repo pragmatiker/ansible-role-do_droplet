@@ -1,0 +1,20 @@
+---
+ntp_server: acme.example.org
+ssh_key: b8:74:3d:7b:74:51:f4:54:bf:b7:d2:8e:2a:83:19:4c
+dc: fra1
+http_port: 80
+shutdown_port: 05
+group: prod
+instance_data:
+  - name: civ
+    port_prefix: 80
+    tomcat_uid: 210
+  - name: civ_hel_prod
+    port_prefix: 90
+    tomcat_uid: 220
+  - name: civ_brd_prod
+    port_prefix: 100
+    tomcat_uid: 230
+  - name: civ_hzd_prod
+    port_prefix: 110
+    tomcat_uid: 240

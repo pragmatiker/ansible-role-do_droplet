@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  connection: local
+  vars:
+    playbook_name: AnsVar
+    
+  roles:
+    - role: droplets
+      environment: "{{digital_ocean_env}}"
+      vars: 
+        group: civ_prod
+        ansible_host_key_checking: false 
+
+

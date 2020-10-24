@@ -1,0 +1,55 @@
+# create_droplet.yaml
+---
+
+- name: "create droplet {{ hostvars[item].inventory_hostname }}"
+  digital_ocean_droplet:
+    unique_name: yes
+    region: "{{ hostvars[item].dc }}" 
+    image: ubuntu-18-04-x64
+    wait: yes
+    wait_timeout: 300
+    name: "{{ hostvars[item].inventory_hostname }}"
+    size_id: s-1vcpu-1gb
+    state: present
+    #ssh_keys: [ 'b8:74:3d:7b:74:51:f4:54:bf:b7:d2:8e:2a:83:19:4c' ]
+    ssh_keys: [ "{{ hostvars[item].ssh_key }}" ]
+  register: created_droplet
+
+- debug:
+    msg: "ID is {{ created_droplet.data.droplet.id }}, IP is {{ created_droplet.data.ip_address }}, Name is {{ created_droplet.data.droplet.name }}"
+
+- digital_ocean_tag:
+    name: '{{  hostvars[item].group }}'
+    resource_id: "{{ created_droplet.data.droplet.id }}"
+    state: present
+  register: tag_response
+
+- name: remove {{ created_droplet.data.droplet.name }} from "/etc/hosts"
+  lineinfile:
+    path: /etc/hosts
+    regexp: ".*{{ created_droplet.data.droplet.name }}$"
+    state: absent
+    create: yes
+
+- name: "Add hostname {{ created_droplet.data.droplet.name }} and IP {{ created_droplet.data.ip_address }} to /etc/hosts"
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ created_droplet.data.ip_address }} {{ created_droplet.data.droplet.name }}"
+
+- name: "Add {{ created_droplet.data.droplet.name }} to ansible inventory"
+  add_host:
+    name: '{{ created_droplet.data.droplet.name }}'
+    groups: '{{ hostvars[item].group }}' 
+           
+- name: "Write droplet ID {{ created_droplet.data.droplet.id }} to file ./{{ playbook_name }}_droplet_id"
+  lineinfile:
+    path: "./{{ playbook_name }}_droplet_id"
+    line: "{{ created_droplet.data.droplet.id }}"
+    create: yes
+
+- name: "Wait for [SSH] on {{ created_droplet.data.droplet.name }}"
+  wait_for:
+    host: '{{ created_droplet.data.droplet.name }}'
+    port: 22
+
+

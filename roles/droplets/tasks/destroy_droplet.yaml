@@ -1,0 +1,14 @@
+# destroy_droplet.yaml
+---
+- name: destroy droplet "{{ item }}"
+  digital_ocean_droplet:
+    wait: yes
+    wait_timeout: 300
+    id: "{{ item }}"
+    state: absent
+
+- name: remove ID "{{ item }}" from file "{{ playbook_name }}_droplet_id" after destruction
+  lineinfile:
+    path: ./{{ playbook_name }}_droplet_id
+    regexp: "^{{ item }}$"
+    state: absent
