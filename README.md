@@ -15,3 +15,4 @@ inventory/prod/group_vars/civ_prod.yaml
 ssh_key: b8:74:3d:7b:74:51:f4:54:bf:b7:d2:8e:2a:83:19:4c
 dc: fra1
 group: prod
+
