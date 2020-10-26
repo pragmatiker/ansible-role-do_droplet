@@ -1,14 +1,11 @@
 ---
-- hosts: localhost
-  connection: local
+- hosts: civ_prod
+  gather_facts: false
   vars:
     playbook_name: AnsVar
+    ansible_host_key_checking: false 
     
   roles:
     - role: droplets
       environment: "{{digital_ocean_env}}"
-      vars: 
-        group: civ_prod
-        ansible_host_key_checking: false 
-
 
