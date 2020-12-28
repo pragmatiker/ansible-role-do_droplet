@@ -13,4 +13,4 @@
   tasks:
     - name: Destroy multiple DO Droplets
       include_tasks: destroy_droplet.yaml
-      with_items: "{{ lookup('file', './{{ playbook_name }}_droplet_id').splitlines() }}"
+      with_items: "{{ lookup('file', '{{ playbook_name }}_droplet_id').splitlines() }}"
