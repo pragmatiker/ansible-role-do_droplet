@@ -1,4 +1,4 @@
-Role to create multiple droplets from inventory group an group_vars
+Role to create multiple digital ocean droplets from inventory group and group_vars
 
 ### inventory/prod/hosts 
 ```
@@ -35,6 +35,3 @@ group: prod
     - role: ansible-role-do_droplet
       environment: "{{digital_ocean_env}}"
 ```
-
-
-
