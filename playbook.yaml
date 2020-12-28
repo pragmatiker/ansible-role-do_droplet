@@ -6,6 +6,6 @@
     ansible_host_key_checking: false 
     
   roles:
-    - role: droplets
+    - role: ansible-role-do_droplet
       environment: "{{digital_ocean_env}}"
 
