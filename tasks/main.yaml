@@ -1,4 +1,3 @@
-# lab_create.yaml
 ---
 - name: "Create DO Droplet {{ group  }}"
   include_tasks: create_droplet.yaml
