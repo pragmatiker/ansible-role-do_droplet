@@ -12,7 +12,7 @@ papciv302
 ### inventory/prod/group_vars/all.yaml
 ```
 digital_ocean_env:
-  DO_API_TOKEN: DO_TOKEN_YOU_CREATED
+  DO_API_TOKEN: THE_DO_TOKEN_YOU_CREATED_:)
 ```
 
 ###  inventory/prod/group_vars/civ_prod.yaml
